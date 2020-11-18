@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutFullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:hint="@string/fullname"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:ignore="NotSibling">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:drawableEnd="@drawable/ic_name"
+                android:drawableRight="@drawable/ic_name"
+                android:fontFamily="@font/poppinsmedium"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:hint="@string/email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFullname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:drawableEnd="@drawable/ic_email"
+                android:drawableRight="@drawable/ic_email"
+                android:fontFamily="@font/poppinsmedium"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:hint="@string/username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:drawableEnd="@drawable/ic_user"
+                android:drawableRight="@drawable/ic_user"
+                android:fontFamily="@font/poppinsmedium"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:hint="@string/password"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername"
+            tools:layout_editor_absoluteX="0dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:drawableEnd="@drawable/ic_pass"
+                android:drawableRight="@drawable/ic_pass"
+                android:fontFamily="@font/poppinsmedium"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="@string/loginhere"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSignUp"
+        app:layout_constraintVertical_bias="0.138"
+        tools:targetApi="jelly_bean" />
+
+    <Button
+        android:id="@+id/buttonSignUp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="160dp"
+        android:text="@string/signup"
+        app:backgroundTint="#46B14B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.425" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/poppinsbold"
+        android:gravity="center"
+        android:text="@string/signup"
+        android:textColor="#46B14B"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="jelly_bean" />
+
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="12dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

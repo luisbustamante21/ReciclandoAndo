@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ReciclandoAndo</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Inicia sesion</string>
+    <string name="signup">Registrate</string>
+    <string name="fullname">Nombre completo</string>
+    <string name="email">Email</string>
+    <string name="loginhere">Ya tienes una cuenta? Inicia sesion!</string>
+
+</resources>
