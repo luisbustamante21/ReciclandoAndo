@@ -3,11 +3,13 @@ package com.asapbusiness.reciclandoando;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,25 +23,45 @@ public class Login extends AppCompatActivity {
     Button buttonLogin;
     TextView textViewSignUp;
     ProgressBar progressBar;
+    CheckBox mRemember;
+
+    SharedPreferences sharedPreferences;
+
+    boolean isRemembered = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        
         textInputEditTextUsername = findViewById(R.id.usernameLogin);
         textInputEditTextPassword = findViewById(R.id.passwordLogin);
+        mRemember = findViewById(R.id.checkBox);
 
         buttonLogin = findViewById(R.id.btnLogin);
         textViewSignUp = findViewById(R.id.signUpText);
         progressBar = findViewById(R.id.progress);
+
+
+        sharedPreferences = getSharedPreferences("datos", MODE_PRIVATE);
+
+       isRemembered = sharedPreferences.getBoolean("CHECKBOX", false);
+
+        /*if(isRemembered){
+
+            Intent intent = new Intent(getApplicationContext(), MapReciclador.class);
+            startActivity(intent);
+            finish();
+        }*/
 
         textViewSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),SignUp.class);
                 startActivity(intent);
-                finish();
+
             }
         });
 
@@ -47,12 +69,19 @@ public class Login extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String fullname, username, password, email, typeuser;
+                String fullname, username, password;
                 username = textInputEditTextUsername.getText().toString();
                 password = textInputEditTextPassword.getText().toString();
-                //typeuser = textInputEditTextTypeuser.getText().toString();
 
-                //if(!fullname.equals("") && !username.equals("") && !password.equals("") && !email.equals("") && !typeuser.equals("")) {
+                boolean checked = mRemember.isChecked();
+
+                //SharedPreferences preferencias = getSharedPreferences("datos", MODE_PRIVATE);
+                SharedPreferences.Editor obj_editor = sharedPreferences.edit();
+                obj_editor.putString("username", textInputEditTextUsername.getText().toString());
+                obj_editor.putString("pass", textInputEditTextPassword.getText().toString());
+                obj_editor.putBoolean("CHECKBOX", checked);
+                obj_editor.apply();
+
 
                 if(!username.equals("") && !password.equals("")) {
 
@@ -74,9 +103,18 @@ public class Login extends AppCompatActivity {
                             if (putData.onComplete()) {
                                 progressBar.setVisibility(View.GONE);
                                 String result = putData.getResult();
-                                if (result.equals("Login Success")){
+                                if (result.equals("Reciclador")){
                                     Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                                    Intent intent = new Intent(getApplicationContext(), MapReciclador.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+                              if (result.equals("Donador")){
+                                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+
+                                    Intent intent = new Intent(getApplicationContext(), MapDonador.class);
                                     startActivity(intent);
                                     finish();
 
