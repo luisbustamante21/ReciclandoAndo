@@ -1,56 +1,46 @@
 package com.asapbusiness.reciclandoando;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
+
 public class MapDonador extends AppCompatActivity implements OnMapReadyCallback {
 
-    TextView txt;
-    Button mLogOutBtn;
     SharedPreferences preferences;
 
     private GoogleMap mMap;
     private SupportMapFragment mMapFragment;
+
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_donador);
 
-        //txt = findViewById(R.id.txt);
-        //mLogOutBtn = findViewById(R.id.buttonlogout);
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Mapa Donador");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mMapFragment.getMapAsync(this);
 
-
         preferences = getSharedPreferences("datos", MODE_PRIVATE);
 
         String name = preferences.getString("username", "");
-        //txt.setText("Bienvenido");
 
-       /* mLogOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor  = preferences.edit();
-                editor.clear();
-                editor.apply();
-
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });*/
     }
 
     @Override
@@ -58,5 +48,30 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.donador_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected (@NonNull MenuItem item){
+
+        if(item.getItemId()==R.id.action_logout){
+            logout();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor  = preferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(getApplicationContext(), Login.class);
+        startActivity(intent);
+        finish();
     }
 }

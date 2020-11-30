@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MapReciclador">
 
+    <include layout="@layout/action_bar_toolbar"/>
+
 
 <fragment
     android:id="@+id/map"
@@ -13,16 +15,5 @@
     android:layout_height="match_parent"
     android:name="com.google.android.gms.maps.SupportMapFragment"
     />
-
-    <Button
-        android:id="@+id/buttonlogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cerrar sesion"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.597" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

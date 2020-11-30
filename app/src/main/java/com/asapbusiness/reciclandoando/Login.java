@@ -45,22 +45,42 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progress);
 
 
-        sharedPreferences = getSharedPreferences("datos", MODE_PRIVATE);
+       sharedPreferences = getSharedPreferences("datos", MODE_PRIVATE);
 
        isRemembered = sharedPreferences.getBoolean("CHECKBOX", false);
 
-        /*if(isRemembered){
+        if(isRemembered){
 
-            Intent intent = new Intent(getApplicationContext(), MapReciclador.class);
-            startActivity(intent);
-            finish();
-        }*/
+            if(sharedPreferences.getString("tipo", "").equals("Reciclador")){
+
+                Intent intent = new Intent(getApplicationContext(), MapReciclador.class);
+                startActivity(intent);
+                finish();
+
+            }
+
+            if(sharedPreferences.getString("tipo", "").equals("Donador")){
+
+                Intent intent = new Intent(getApplicationContext(), MapDonador.class);
+                startActivity(intent);
+                finish();
+
+            }
+
+        }
+
+        /*
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            int defaultValue = getResources().getInteger(R.integer.saved_high_score_default_key);
+            int highScore = sharedPref.getInt(getString(R.string.saved_high_score_key), defaultValue);
+         */
 
         textViewSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),SignUp.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -80,7 +100,8 @@ public class Login extends AppCompatActivity {
                 obj_editor.putString("username", textInputEditTextUsername.getText().toString());
                 obj_editor.putString("pass", textInputEditTextPassword.getText().toString());
                 obj_editor.putBoolean("CHECKBOX", checked);
-                obj_editor.apply();
+
+                //obj_editor.apply();
 
 
                 if(!username.equals("") && !password.equals("")) {
@@ -103,7 +124,10 @@ public class Login extends AppCompatActivity {
                             if (putData.onComplete()) {
                                 progressBar.setVisibility(View.GONE);
                                 String result = putData.getResult();
+                                obj_editor.putString("tipo", result); /*---------------------*/
                                 if (result.equals("Reciclador")){
+
+                                    obj_editor.apply();
                                     Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                                     Intent intent = new Intent(getApplicationContext(), MapReciclador.class);
@@ -112,6 +136,7 @@ public class Login extends AppCompatActivity {
 
                                 }
                               if (result.equals("Donador")){
+                                    obj_editor.apply();
                                     Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                                     Intent intent = new Intent(getApplicationContext(), MapDonador.class);
