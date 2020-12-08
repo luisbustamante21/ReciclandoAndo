@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="#52D157"
+        android:background="#46B14B"
         app:titleTextColor="@color/white"
         android:theme="@style/ToolbarTheme"
         >

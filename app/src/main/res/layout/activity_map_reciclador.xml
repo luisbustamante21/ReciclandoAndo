@@ -4,16 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#4CAF50"
     tools:context=".MapReciclador">
 
-    <include layout="@layout/action_bar_toolbar"/>
+    <include layout="@layout/action_bar_toolbar" />
 
 
-<fragment
-    android:id="@+id/map"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    />
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/btnConnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="65dp"
+        android:fontFamily="@font/poppinsbold"
+        android:text="Conectarse"
+        app:backgroundTint="#46B14B"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
