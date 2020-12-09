@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,23 +60,32 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
     private Marker mMarker;
     private Button mbuttonConnect;
     private boolean mIsConnect = false;
+    private LatLng mCurrentLatLng;
+    private double latitud,longitud;
+    private String name;
 
-    private double latitud = 0.0, longitud = 0.0;
+
+
+    private GpsProvider objetoProvider = new GpsProvider();
 
     public String usernameID;
-    SharedPreferences mSharedPreferences;
 
 
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
-            for (Location location : locationResult.getLocations()) {
-                saveLocation();
+            Toast.makeText(MapReciclador.this, "", Toast.LENGTH_SHORT).show();
+            for (Location location : locationResult.getLocations()) { //-------almacenar la localizacion en una variable global
+
+                objetoProvider.saveLocation(name,latitud, longitud);
+
                 latitud = location.getLatitude();
                 longitud = location.getLongitude();
 
                 if (getApplicationContext() != null) {
+
+                    mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude()); //----inicializa-----
 
                     if (mMarker != null){
                         mMarker.remove();
@@ -96,6 +104,9 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
                                     .zoom(17f)
                                     .build()
                     ));
+
+                    //------------------metodo update location--------------------
+                    //updateLocation();
                 }
             }
         }
@@ -132,11 +143,15 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
 
         preferences = getSharedPreferences("datos", MODE_PRIVATE);
 
-        String name = preferences.getString("username", "");
+        name = preferences.getString("username", "");
         usernameID = name;
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
 
     }
+
+  /* private void updateLocation(){ //------------llamado del metodo savelocation-------------
+        objetoProvider.saveLocation(preferences.getString("name",null).toString());
+    }*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -145,7 +160,9 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         mMap.setMyLocationEnabled(false);
@@ -297,40 +314,5 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
         finish();
     }
 
-    private void saveLocation (){
-
-        try {
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(() -> {
-
-                String[] field = new String[5];
-                field[0] = "usernameID";
-                field[1] = "longitud";
-                field[2] = "latitud";
-
-                String[] data = new String[5];
-                data[0] = usernameID;
-                data[1] = String.valueOf(latitud);
-                data[2] = String.valueOf(longitud);
-
-                PutData putData = new PutData("http://luisbustamante.tk/LoginRegister/localizacion.php", "POST", field, data);
-                if (putData.startPut()) {
-                    if (putData.onComplete()) {
-                        Toast.makeText(this, "localizacion guardada", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-        }
-        catch (Exception e){
-
-            e.getMessage();
-
-            //System. Out. Println(e. Getmessaje()) ;
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
 }
 

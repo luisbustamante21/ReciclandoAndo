@@ -101,6 +101,7 @@ public class Login extends AppCompatActivity {
                 obj_editor.putString("pass", textInputEditTextPassword.getText().toString());
                 obj_editor.putBoolean("CHECKBOX", checked);
 
+
                 //obj_editor.apply();
 
 
