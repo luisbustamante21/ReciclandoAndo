@@ -29,7 +29,6 @@ public class Login extends AppCompatActivity {
 
     boolean isRemembered = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -46,7 +45,6 @@ public class Login extends AppCompatActivity {
 
 
        sharedPreferences = getSharedPreferences("datos", MODE_PRIVATE);
-
        isRemembered = sharedPreferences.getBoolean("CHECKBOX", false);
 
         if(isRemembered){
@@ -127,14 +125,12 @@ public class Login extends AppCompatActivity {
                                 String result = putData.getResult();
                                 obj_editor.putString("tipo", result); /*---------------------*/
                                 if (result.equals("Reciclador")){
-
                                     obj_editor.apply();
-                                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
+                                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), MapReciclador.class);
                                     startActivity(intent);
                                     finish();
-
                                 }
                               if (result.equals("Donador")){
                                     obj_editor.apply();
