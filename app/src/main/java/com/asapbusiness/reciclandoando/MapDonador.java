@@ -32,8 +32,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class MapDonador extends AppCompatActivity implements OnMapReadyCallback {
@@ -49,6 +52,7 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
     private final static int LOCATION_REQUEST_CODE = 1;
     private final static int SETTINGS_REQUEST_CODE = 2;
     public String usernameID;
+    private Marker mMarker;
 
 
     LocationCallback mLocationCallback = new LocationCallback() {
@@ -57,6 +61,23 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
             super.onLocationResult(locationResult);
             for (Location location : locationResult.getLocations()) {
                 if (getApplicationContext() != null) {
+                    if (mMarker != null){
+                        mMarker.remove();
+                    }
+
+                    mMarker = mMap.addMarker(new MarkerOptions().position(
+                            new LatLng(location.getLatitude(), location.getLongitude())
+                            )
+                                    .title("Tu posicion")
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.cargobike))
+                    );
+                    //obtener la locacionacion del usuario
+                    mMap.moveCamera(CameraUpdateFactory.newCameraPosition(
+                            new CameraPosition.Builder()
+                                    .target(new LatLng(location.getLatitude(), location.getLongitude()))
+                                    .zoom(17f)
+                                    .build()
+                    ));
 
                     //obtener la locacionacion del usuario
                     mMap.moveCamera(CameraUpdateFactory.newCameraPosition(

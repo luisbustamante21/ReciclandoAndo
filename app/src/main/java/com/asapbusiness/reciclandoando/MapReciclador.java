@@ -71,11 +71,14 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
     public String usernameID;
 
 
+
+
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
-            //Toast.makeText(MapReciclador.this, "", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MapReciclador.this, "1", Toast.LENGTH_SHORT).show();
+
             for (Location location : locationResult.getLocations()) { //-------almacenar la localizacion en una variable global
 
                 latitud = location.getLatitude();
@@ -102,8 +105,8 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
                                     .zoom(17f)
                                     .build()
                     ));
-
-                    objetoProvider.saveLocation(name,latitud, longitud);
+                       // objetoProvider.saveLocation(name,latitud,longitud);
+                    objetoProvider.updateLocation(name,latitud, longitud);
                 }
             }
         }
@@ -122,15 +125,13 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
         getSupportActionBar().setTitle("Mapa Reciclador");
 
         mbuttonConnect = findViewById(R.id.btnConnect);
-        mbuttonConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mIsConnect){
-                    disconnect();
-                }
-                else{
-                    startLocation();
-                }
+        mbuttonConnect.setOnClickListener(v -> {
+            if(mIsConnect){
+                disconnect();
+            }
+            else{
+                objetoProvider.saveLocation(name,latitud, longitud);
+                startLocation();
             }
         });
 
@@ -142,7 +143,7 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
 
         name = preferences.getString("username", "");
         usernameID = name;
-        Toast.makeText(this, "Hola!" + name, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Hola!  " + name, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -227,18 +228,18 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private void disconnect(){
+        mbuttonConnect.setText("Conectarse");
+        mIsConnect = false;
 
         if(mFusedLocation != null){
-            mbuttonConnect.setText("Conectarse");
-            mIsConnect = false;
+
             mFusedLocation.removeLocationUpdates(mLocationCallback);
             objetoProvider.removeLocation(name); //--------------borra todos los datos de localizacion--------------
-            //Toast.makeText(this, usernameID, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(this, "No te puedes desconectar", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void startLocation(){
@@ -248,6 +249,7 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
                     mbuttonConnect.setText("Desconectarse");
                     mIsConnect = true;
                     mFusedLocation.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                    //objetoProvider.removeLocation(name);
                 }
                 else{
                     showAlertDialogNOGPS();
@@ -305,6 +307,7 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
 
     private void logout() {
         SharedPreferences.Editor editor  = preferences.edit();
+        disconnect();
         editor.clear();
         editor.apply();
 
@@ -312,6 +315,5 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
         startActivity(intent);
         finish();
     }
-
 }
 

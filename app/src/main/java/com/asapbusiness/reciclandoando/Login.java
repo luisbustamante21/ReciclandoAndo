@@ -24,6 +24,7 @@ public class Login extends AppCompatActivity {
     TextView textViewSignUp;
     ProgressBar progressBar;
     CheckBox mRemember;
+    private GpsProvider objetoProvider = new GpsProvider();
 
     SharedPreferences sharedPreferences;
 
@@ -50,7 +51,7 @@ public class Login extends AppCompatActivity {
         if(isRemembered){
 
             if(sharedPreferences.getString("tipo", "").equals("Reciclador")){
-
+                objetoProvider.updateLocation(sharedPreferences.getString("username", ""),0.0, 0.0);
                 Intent intent = new Intent(getApplicationContext(), MapReciclador.class);
                 startActivity(intent);
                 finish();
@@ -123,6 +124,7 @@ public class Login extends AppCompatActivity {
                             if (putData.onComplete()) {
                                 progressBar.setVisibility(View.GONE);
                                 String result = putData.getResult();
+                                objetoProvider.saveLocation(username,0.0, 0.0);
                                 obj_editor.putString("tipo", result); /*---------------------*/
                                 if (result.equals("Reciclador")){
                                     obj_editor.apply();
