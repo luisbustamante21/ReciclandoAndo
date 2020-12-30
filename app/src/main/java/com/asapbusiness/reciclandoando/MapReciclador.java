@@ -310,6 +310,7 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
         disconnect();
         editor.clear();
         editor.apply();
+        objetoProvider.removeLocation(name);
 
         Intent intent = new Intent(getApplicationContext(), Login.class);
         startActivity(intent);

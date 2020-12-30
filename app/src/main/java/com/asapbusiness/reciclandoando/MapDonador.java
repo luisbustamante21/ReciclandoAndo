@@ -14,6 +14,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +54,9 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
     private final static int SETTINGS_REQUEST_CODE = 2;
     public String usernameID;
     private Marker mMarker;
+    private GpsProvider objetoProvider = new GpsProvider();
+    private String name;
+
 
 
     LocationCallback mLocationCallback = new LocationCallback() {
@@ -69,7 +73,7 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
                             new LatLng(location.getLatitude(), location.getLongitude())
                             )
                                     .title("Tu posicion")
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.cargobike))
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.markerdonador))
                     );
                     //obtener la locacionacion del usuario
                     mMap.moveCamera(CameraUpdateFactory.newCameraPosition(
@@ -86,6 +90,7 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
                                     .zoom(15f)
                                     .build()
                     ));
+                    //objetoProvider.updateLocation(name,latitud,longitud);
 
                 }
             }
@@ -109,8 +114,9 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
 
         preferences = getSharedPreferences("datos", MODE_PRIVATE);
 
-        String name = preferences.getString("username", "");
-
+        name = preferences.getString("username", "");
+        usernameID = name;
+        Toast.makeText(this, "Hola!  " + name, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -250,6 +256,7 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
         SharedPreferences.Editor editor  = preferences.edit();
         editor.clear();
         editor.apply();
+        objetoProvider.removeLocation(name);
 
         Intent intent = new Intent(getApplicationContext(), Login.class);
         startActivity(intent);

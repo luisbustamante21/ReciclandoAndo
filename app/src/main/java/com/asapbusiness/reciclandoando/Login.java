@@ -124,11 +124,11 @@ public class Login extends AppCompatActivity {
                             if (putData.onComplete()) {
                                 progressBar.setVisibility(View.GONE);
                                 String result = putData.getResult();
-                                objetoProvider.saveLocation(username,0.0, 0.0);
+                                //objetoProvider.saveLocation(username,0.0, 0.0);
                                 obj_editor.putString("tipo", result); /*---------------------*/
                                 if (result.equals("Reciclador")){
                                     obj_editor.apply();
-
+                                    objetoProvider.saveLocation(username,0.0, 0.0);
                                     Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), MapReciclador.class);
                                     startActivity(intent);
