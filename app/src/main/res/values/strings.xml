@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">ReciclandoAndo</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="login">Inicia sesion</string>
+    <string name="username">Nombre de Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Inicia sesión</string>
     <string name="signup">Registrate</string>
     <string name="fullname">Nombre completo</string>
     <string name="email">Email</string>
     <string name="loginhere">Ya tienes una cuenta? Inicia sesion!</string>
-    <string name="mantener_mi_sesion_activa">Mantener mi sesion activa</string>
-    <string name="no_tienes_cuenta_registrate_aqui">No tienes cuenta? Registrate aqui!</string>
+    <string name="mantener_mi_sesion_activa">Mantener mi sesión activa</string>
+    <string name="no_tienes_cuenta_registrate_aqui">No tienes cuenta? Regístrate aqui!</string>
     <string name="todo">TODO</string>
 
 </resources>

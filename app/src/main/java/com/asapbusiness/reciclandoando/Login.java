@@ -59,7 +59,7 @@ public class Login extends AppCompatActivity {
             }
 
             if(sharedPreferences.getString("tipo", "").equals("Donador")){
-
+                objetoProvider.updateLocationDonador(sharedPreferences.getString("username", ""),0.0, 0.0);
                 Intent intent = new Intent(getApplicationContext(), MapDonador.class);
                 startActivity(intent);
                 finish();
@@ -100,9 +100,7 @@ public class Login extends AppCompatActivity {
                 obj_editor.putString("pass", textInputEditTextPassword.getText().toString());
                 obj_editor.putBoolean("CHECKBOX", checked);
 
-
                 //obj_editor.apply();
-
 
                 if(!username.equals("") && !password.equals("")) {
 
@@ -136,6 +134,7 @@ public class Login extends AppCompatActivity {
                                 }
                               if (result.equals("Donador")){
                                     obj_editor.apply();
+                                  //objetoProvider.saveLocationDonador(username,0.0, 0.0);
                                     Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                                     Intent intent = new Intent(getApplicationContext(), MapDonador.class);

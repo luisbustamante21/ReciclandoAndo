@@ -35,18 +35,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.885" />
+        app:layout_constraintVertical_bias="0.958" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="252dp"
+        android:layout_marginTop="268dp"
         android:layout_marginRight="30dp"
         android:hint="@string/username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.733"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -57,11 +56,13 @@
             android:background="#FFFFFF"
             android:drawableEnd="@drawable/ic_user"
             android:drawableRight="@drawable/ic_user"
-            android:fontFamily="@font/poppinsmedium" />
+            android:fontFamily="@font/poppinsmedium"
+            android:inputType="text"
+            app:tabTextAppearance="@style/TabTextAppearance"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-         <com.google.android.material.textfield.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,7 +84,9 @@
             android:background="#FFFFFF"
             android:drawableEnd="@drawable/ic_pass"
             android:drawableRight="@drawable/ic_pass"
-            android:fontFamily="@font/poppinsmedium" />
+            android:fontFamily="@font/poppinsmedium"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"/>
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -112,21 +115,20 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        app:layout_constraintVertical_bias="0.311" />
+        app:layout_constraintVertical_bias="0.286" />
 
     <TextView
         android:id="@+id/signUpText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="156dp"
+        android:layout_marginBottom="148dp"
         android:fontFamily="@font/poppinsmedium"
         android:text="@string/no_tienes_cuenta_registrate_aqui"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
         tools:ignore="UnknownId"
         tools:targetApi="jelly_bean" />
 

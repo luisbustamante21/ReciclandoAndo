@@ -235,7 +235,7 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
 
             mFusedLocation.removeLocationUpdates(mLocationCallback);
             objetoProvider.removeLocation(name); //--------------borra todos los datos de localizacion--------------
-            Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "name", Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(this, "No te puedes desconectar", Toast.LENGTH_SHORT).show();
@@ -316,5 +316,6 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
         startActivity(intent);
         finish();
     }
+
 }
 

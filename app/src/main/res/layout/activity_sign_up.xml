@@ -83,7 +83,8 @@
                 android:drawableEnd="@drawable/ic_user"
                 android:drawableRight="@drawable/ic_user"
                 android:fontFamily="@font/poppinsmedium"
-                tools:targetApi="jelly_bean" />
+                tools:targetApi="jelly_bean"
+                app:tabTextAppearance="@style/TabTextAppearance"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

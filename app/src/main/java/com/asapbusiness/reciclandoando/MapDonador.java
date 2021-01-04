@@ -15,6 +15,7 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,6 +57,7 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
     private Marker mMarker;
     private GpsProvider objetoProvider = new GpsProvider();
     private String name;
+    private double latitud,longitud;
 
 
 
@@ -64,6 +66,10 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
             for (Location location : locationResult.getLocations()) {
+
+                latitud = location.getLatitude();
+                longitud = location.getLongitude();
+
                 if (getApplicationContext() != null) {
                     if (mMarker != null){
                         mMarker.remove();
@@ -90,7 +96,8 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
                                     .zoom(15f)
                                     .build()
                     ));
-                    //objetoProvider.updateLocation(name,latitud,longitud);
+                    //objetoProvider.saveLocationDonador(name,latitud,longitud);
+                    objetoProvider.updateLocationDonador(name,latitud,longitud);
 
                 }
             }
@@ -101,6 +108,7 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_donador);
+
 
         mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
 
@@ -117,6 +125,24 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
         name = preferences.getString("username", "");
         usernameID = name;
         Toast.makeText(this, "Hola!  " + name, Toast.LENGTH_SHORT).show();
+
+        objetoProvider.saveLocationDonador(name,latitud,longitud);
+       //objetoProvider.updateLocationDonador(name,latitud,longitud);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(this, "Saliste de la app", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy(){
+        objetoProvider.removeLocationDonador(name);
+        super.onDestroy();
+        if(isFinishing()){
+            logout();
+        }
     }
 
     @Override
@@ -256,10 +282,12 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
         SharedPreferences.Editor editor  = preferences.edit();
         editor.clear();
         editor.apply();
-        objetoProvider.removeLocation(name);
+        objetoProvider.removeLocationDonador(name);
 
         Intent intent = new Intent(getApplicationContext(), Login.class);
         startActivity(intent);
         finish();
     }
+
 }
+
