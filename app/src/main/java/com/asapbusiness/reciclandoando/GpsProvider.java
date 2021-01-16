@@ -197,31 +197,33 @@ public class GpsProvider {
         return geoQuery;
     }
 
- /*   public void GetActiveDrivers (){
+   public void GetActiveDrivers (String usernameID, double latitud, double longitud){
 
-        try {
+       try {
+           Handler handler = new Handler(Looper.getMainLooper());
+           handler.post(() -> {
 
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(() -> {
+               String[] field = new String[3];
+               field[0] = "usernameID";
+               field[1] = "latitud";
+               field[2] = "longitud";
 
-                String[] field = new String[1];
-                field[0] = "usernameID";
+               String[] data = new String[3];
+               data[0] = usernameID;
+               data[1] = String.valueOf(latitud);
+               data[2] = String.valueOf(longitud);
 
-                String[] data = new String[1];
-                data[0] = usernameID;
+               PutData putData = new PutData("https://luisbustamante.tk/LoginRegister/getActiveDrivers.php", "POST", field, data);
+               if (putData.startPut()) {
+                   if (putData.onComplete()) {
 
-                PutData putData = new PutData("https://luisbustamante.tk/LoginRegister/deleteData.php", "POST", field, data);
-                if (putData.startPut()) {
-                    if (putData.onComplete()) {
+                   }
+               }
+           });
 
-                    }
-                }
-            });
+       } catch (Exception e){
 
-        }catch (Exception e) {
+       }
 
-
-        }
-
-    }*/
+    }
 }

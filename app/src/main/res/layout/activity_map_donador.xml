@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MapDonador">
 
-    <include layout="@layout/action_bar_toolbar"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/action_bar_toolbar" />
 
     <fragment
         android:id="@+id/map"
@@ -14,5 +16,17 @@
         android:layout_height="match_parent"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         tools:layout="@layout/support_simple_spinner_dropdown_item" />
+
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="91dp"
+        android:layout_height="51dp"
+        android:src="@drawable/camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.021"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

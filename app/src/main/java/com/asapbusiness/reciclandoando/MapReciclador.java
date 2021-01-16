@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
@@ -65,6 +66,9 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
     private String name;
 
 
+    private long startTime=70*60*1000; // 15 MINS IDLE TIME
+    private final long interval = 1 * 1000;
+    private CountDownTimer countDownTimer;
 
     private GpsProvider objetoProvider = new GpsProvider();
 
@@ -118,6 +122,8 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_reciclador);
 
+        countDownTimer = new MyCountDownTimer(startTime, interval);
+
         mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
 
         mToolbar = findViewById(R.id.toolbar);
@@ -145,6 +151,49 @@ public class MapReciclador extends AppCompatActivity implements OnMapReadyCallba
         usernameID = name;
         Toast.makeText(this, "Hola!  " + name, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(this, "Saliste de la app", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUserInteraction(){
+
+        super.onUserInteraction();
+
+        //Reset the timer on user interaction...
+        countDownTimer.cancel();
+        countDownTimer.start();
+    }
+
+    public class MyCountDownTimer extends CountDownTimer {
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+
+        @Override
+        public void onFinish() {
+            // CIERRA LA APP MATANDO EL PROCESO Y VUELVE A ABRIRLO.
+            logout();
+            objetoProvider.removeLocationDonador(name);
+            //android.os.Process.killProcess(android.os.Process.myPid());
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(isFinishing()){
+            //logout();
+            objetoProvider.removeLocationDonador(name);
+        }
     }
 
     @Override

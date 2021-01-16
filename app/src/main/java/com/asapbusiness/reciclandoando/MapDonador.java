@@ -6,14 +6,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.os.CountDownTimer;
 
@@ -36,9 +41,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MapDonador extends AppCompatActivity implements OnMapReadyCallback {
@@ -58,6 +71,16 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
     private GpsProvider objetoProvider = new GpsProvider();
     private String name;
     private double latitud,longitud;
+
+    public LatLng latLng;
+    ImageView cam;
+
+
+    private long startTime=45*60*1000; // 45 MINS IDLE TIME
+    private final long interval = 1 * 1000;
+    private CountDownTimer countDownTimer;
+    private List<Marker> markers = new ArrayList<>();
+
 
 
 
@@ -110,11 +133,24 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
         setContentView(R.layout.activity_map_donador);
 
 
+        countDownTimer = new MyCountDownTimer(startTime, interval);
+
         mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Mapa Donador");
+
+        cam = findViewById(R.id.camera);
+
+        cam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), cameraActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -128,20 +164,74 @@ public class MapDonador extends AppCompatActivity implements OnMapReadyCallback 
 
         objetoProvider.saveLocationDonador(name,latitud,longitud);
        //objetoProvider.updateLocationDonador(name,latitud,longitud);
+
+        /*private void drawMap(LatLng latLng, List<LatLng> positions) {
+
+            for (LatLng position : positions) {
+                Marker marker = mMap.addMarker(
+                        new MarkerOptions()
+                                .position(position)
+                                .visible(false)); // Invisible for now
+                markers.add(marker);
+            }
+
+            //Draw your circle
+            Circle circle = mMap.addCircle(new CircleOptions()
+                    .center(latLng)
+                    .radius(400)
+                    .strokeColor(Color.rgb(0, 136, 255))
+                    .fillColor(Color.argb(20, 0, 136, 255)));
+
+            for (Marker marker : markers) {
+                if (SphericalUtil.computeDistanceBetween(latLng, marker.getPosition()) < 400) {
+                    marker.setVisible(true);
+                }
+            }
+        }*/
+
     }
+
 
     @Override
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "Saliste de la app", Toast.LENGTH_SHORT).show();
+       Toast.makeText(this, "Tu sesion ha expirado", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUserInteraction(){
+
+        super.onUserInteraction();
+
+        //Reset the timer on user interaction...
+        countDownTimer.cancel();
+        countDownTimer.start();
+    }
+
+    public class MyCountDownTimer extends CountDownTimer {
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+
+        @Override
+        public void onFinish() {
+            // CIERRA LA APP MATANDO EL PROCESO Y VUELVE A ABRIRLO.
+            logout();
+            objetoProvider.removeLocationDonador(name);
+            //android.os.Process.killProcess(android.os.Process.myPid());
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
     }
 
     @Override
     public void onDestroy(){
-        objetoProvider.removeLocationDonador(name);
         super.onDestroy();
         if(isFinishing()){
-            logout();
+            //logout();
+            objetoProvider.removeLocationDonador(name);
         }
     }
 
