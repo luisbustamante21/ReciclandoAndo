@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".cameraActivity">
-    
-    <ImageView
-        android:layout_weight="1"
-        android:id="@+id/imageviewww"
+
+    <org.opencv.android.JavaCameraView
+        android:id="@+id/CameraView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="43dp" />
 
     <Button
-        android:id="@+id/botonImage"
-        android:textStyle="bold"
-        android:text="Tomar Foto"
-        android:layout_width="match_parent"
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="670dp"
-        android:backgroundTint="#46B14B"/>
+        android:layout_marginBottom="16dp"
+        android:onClick="YOLO"
+        android:text="Yolo"
+        app:backgroundTint="#46B14B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

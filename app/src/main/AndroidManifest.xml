@@ -7,6 +7,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA"/>
 
+
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front.autofocus" android:required="false"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReciclandoAndo"
         android:usesCleartextTraffic="true">
-        <activity android:name=".cameraActivity"></activity>
+        <activity android:name=".cameraActivity"
+            android:screenOrientation="landscape">></activity>
         <activity android:name=".animAtivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
